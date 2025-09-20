@@ -11,11 +11,13 @@ If a `dosbox.conf` is present in a program's folder, the launcher will use that 
    - **Linux:** No additional installation is required.  
 
 2. **Running Programs**  
-   - Launch your DOS programs by double-clicking the generated launcher scripts.  
+   - Run launcher generator scripts.
+     **Linux / macOS:** Run `create_launchers.sh`.  
+     **Windows:** Run the corresponding `.bat` file.  
+     After reloading the folder there will be now the launchers for the programs stored in the Progams folder.  
 
-3. **Generating Launchers**  
-   - **Linux / macOS:** Run `create_launchers.sh`.  
-   - **Windows:** Run the corresponding `.bat` file.  
+3. Double click the launch_*YourProgramName*.sh or .bat on windows.
+   Your program should start now.
 
 
 ## Folder Structure
