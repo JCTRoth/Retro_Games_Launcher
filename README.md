@@ -23,7 +23,6 @@ If a `dosbox.conf` is present in a program's folder, the launcher will use that 
 ## Folder Structure
 
 ```
-
 DOS\_Launcher/
 ├── Configuration/          # Store in this folder a DosBox Folder with the DoxBox installation.
 │   └── dosbox.conf         # Global DOSBox configuration
@@ -31,7 +30,6 @@ DOS\_Launcher/
 │   └── Blood/              # Example program
 ├── create\_launchers.sh    # Script to generate launchers
 └── start\_Blood.sh         # Example launcher
-
 ```
 
 ## Notes/Tipps
@@ -40,4 +38,3 @@ DOS\_Launcher/
 - TODO TEST ON WINDOWS
 - Each program folder can include its own `dosbox.conf` to override the global configuration.  
 - The launchers handle mounting and starting the DOSBox environment automatically.
-```
