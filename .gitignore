@@ -1,11 +1,6 @@
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,batch,powershell
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,batch,powershell
 
-### Batch ###
-# BatchFiles
-*.bat
-*.cmd
-*.btm
 
 ### PowerShell ###
 # Exclude packaged modules
