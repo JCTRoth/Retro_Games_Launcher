@@ -23,7 +23,7 @@ If a `dosbox.conf` is present in a program's folder, the launcher will use that 
 ## Folder Structure
 
 ```
-DOS\_Launcher/                 # Main Folder
+DOS_Launcher/                  # Main Folder
 ├── Configuration/             # Store in this folder a DosBox Folder with the DoxBox installation.
 │   └── dosbox.conf            # Global DOSBox configuration
 ├── Programs/                  # Program folders inside
@@ -34,7 +34,10 @@ DOS\_Launcher/                 # Main Folder
 
 ## Notes/Tipps
 
-- Press ALT + ENTER to jump any time out of the fullscreen mode.
+- Press ALT-ENTER to jump any time out of the fullscreen mode.
+- Press CTRL-F9 to kill DOSBox.
+- Press CTRL-F10 to release the mouse.
 - TODO TEST ON WINDOWS
 - Each program folder can include its own `dosbox.conf` to override the global configuration.  
 - The launchers handle mounting and starting the DOSBox environment automatically.
+- For more special key combinations, see: https://www.dosbox.com/wiki/Special_Keys

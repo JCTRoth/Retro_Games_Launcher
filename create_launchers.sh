@@ -6,6 +6,10 @@ BASE_DIR="$(pwd)"
 PROGRAMS_DIR="$BASE_DIR/Programs"
 GLOBAL_CONFIG="../Configuration/dosbox.conf"
 LOCAL_DOSBOX="$BASE_DIR/Configuration/DosBox/dosbox.exe"
+LOGS_DIR="$BASE_DIR/logs"
+
+# Create logs directory if it doesn't exist
+mkdir -p "$LOGS_DIR"
 
 echo "=== DOSBox Launcher Generator ==="
 echo "Base directory: $BASE_DIR"
@@ -63,7 +67,13 @@ for dir in "$PROGRAMS_DIR"/*/; do
     cat > "$SCRIPT" <<EOF
 #!/bin/bash
 cd "\$(dirname "\$0")/Programs/$PROG" || exit
-"$DOSBOX_CMD" "$(basename "$EXE")" -conf "$CONFIG" -fullscreen -exit
+LOGFILE="\$(dirname "\$0")/logs/${PROG}.log"
+echo "Starting $PROG at \$(date)" > "\$LOGFILE"
+echo "Logfile: \$LOGFILE" >> "\$LOGFILE"
+echo "===========================================" >> "\$LOGFILE"
+"$DOSBOX_CMD" "$(basename "$EXE")" -conf "$CONFIG" -fullscreen -exit 2>&1 | tee -a "\$LOGFILE"
+echo "===========================================" >> "\$LOGFILE"
+echo "$PROG session ended at \$(date)" >> "\$LOGFILE"
 EOF
     chmod +x "$SCRIPT"
     echo "  Created launcher: $SCRIPT"
