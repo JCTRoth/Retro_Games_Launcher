@@ -135,5 +135,14 @@ The launcher system supports custom configurations for optimal gaming experience
 - Automatic aspect ratio locking
 - Optimized window sizes (GB: 768x512, GBA: 720x480)
 
+### N64 (Mupen64Plus)
+- **Fullscreen mode** for immersive gaming
+- **1920x1080 resolution** for modern displays
+- **Glide64mk2 video plugin** for best performance and compatibility
+- **Multithreaded rendering** enabled for smoother gameplay
+- **Fast texture loading** enabled for better performance
+- **Dynamic recompiler** for optimal CPU emulation
+- Uses `Configuration/mupen64plus.cfg` for all settings
+
 ### Other Platforms
 - DuckStation, PPSSPP, and Mupen64Plus use their default optimized settings

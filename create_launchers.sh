@@ -183,6 +183,7 @@ for rom_dir in "$ROMS_DIR"/*/; do
             ;;
         "N64")
             EMULATOR_CMD="mupen64plus"
+            CONFIG_CMD="--fullscreen --configdir \"\$SCRIPT_DIR${REL_PREFIX}Configuration\""
             LOG_CMD="2>&1 | tee -a \"\$LOGFILE\""
             EXTENSIONS=("*.n64" "*.z64" "*.v64")
             ;;
