@@ -33,13 +33,14 @@ If a `dosbox.conf` is present in a program's folder, the launcher will use that 
    - **Linux/macOS:** Run `./create_launchers.sh`
    - **Windows:** Run the corresponding `.bat` file
    - **Custom output directory:** Use `./create_launchers.sh -o /path/to/output`
+   - Launchers are created in `Launchers/` folder by default
    - Launchers appear as `start_*Name*.sh` files
 
 4. **Run Games**
-   - Double-click any `start_*Name*.sh` launcher
+   - Double-click any `start_*Name*.sh` launcher from `Launchers/` folder
    - **DOS games**: Launch directly in DOSBox
    - **ROM games**: Open emulator GUI for management and settings
-   - Logs are saved in `logs/` folder
+   - Logs are saved in `Logs/` folder
 
 ## Folder Structure
 
@@ -47,7 +48,10 @@ If a `dosbox.conf` is present in a program's folder, the launcher will use that 
 DOS_Launcher/                  # Main Folder
 ├── Configuration/             # DOSBox configuration
 │   ├── DosBox/                # Optional: Local DOSBox installation
-│   └── dosbox.conf            # Global DOSBox configuration
+│   ├── dosbox.conf            # Global DOSBox configuration
+│   ├── mgba-gb.ini            # Game Boy config (4x scale, xBR shader)
+│   ├── mgba-gba.ini           # Game Boy Advance config (4x scale, GBA color)
+│   └── mupen64plus.cfg        # N64 config (fullscreen, 1080p, Glide64mk2)
 ├── Programs/                  # DOS program folders
 │   └── Blood/                 # Example DOS game
 ├── ROMs/                      # Console ROM folders
@@ -56,10 +60,11 @@ DOS_Launcher/                  # Main Folder
 │   ├── PS1/                   # PlayStation 1 ROMs (.bin, .cue, .iso, .img)
 │   ├── PSP/                   # PSP ROMs (.iso, .cso)
 │   └── N64/                   # Nintendo 64 ROMs (.n64, .z64, .v64)
-├── logs/                      # Session logs
-├── create_launchers.sh        # Script to generate launchers
-├── start_Blood.sh             # Example DOS launcher
-└── start_GB_SuperMario.sh     # Example ROM launcher
+├── Logs/                      # Session logs
+├── Launchers/                 # Generated launcher scripts
+│   ├── start_Blood.sh         # Example DOS launcher
+│   └── start_GB_SuperMario.sh # Example ROM launcher
+└── create_launchers.sh        # Script to generate launchers
 ```
 
 ## Supported Platforms

@@ -36,7 +36,7 @@ done
 
 # Set default output directory if not specified
 if [ -z "$OUTPUT_DIR" ]; then
-    OUTPUT_DIR="$(pwd)"
+    OUTPUT_DIR="$(pwd)/Launchers"
 else
     # Convert relative path to absolute
     OUTPUT_DIR="$(cd "$OUTPUT_DIR" 2>/dev/null && pwd)"
@@ -51,7 +51,7 @@ PROGRAMS_DIR="$BASE_DIR/Programs"
 ROMS_DIR="$BASE_DIR/ROMs"
 GLOBAL_CONFIG="$BASE_DIR/Configuration/dosbox.conf"
 LOCAL_DOSBOX="$BASE_DIR/Configuration/DosBox/dosbox.exe"
-LOGS_DIR="$BASE_DIR/logs"
+LOGS_DIR="$BASE_DIR/Logs"
 
 # Create logs directory if it doesn't exist
 mkdir -p "$LOGS_DIR"
@@ -135,7 +135,7 @@ for dir in "$PROGRAMS_DIR"/*/; do
     cat > "$SCRIPT" <<EOF
 #!/bin/bash
 SCRIPT_DIR="\$(cd "\$(dirname "\$0")" && pwd)"
-LOGFILE="\$SCRIPT_DIR${REL_PREFIX}logs/${PROG}.log"
+LOGFILE="\$SCRIPT_DIR${REL_PREFIX}Logs/${PROG}.log"
 cd "\$(dirname "\$0")${REL_PREFIX}Programs/$PROG" || exit
 echo "Starting $PROG at \$(date)" > "\$LOGFILE"
 echo "Logfile: \$LOGFILE" >> "\$LOGFILE"
@@ -212,7 +212,7 @@ for rom_dir in "$ROMS_DIR"/*/; do
             cat > "$SCRIPT" <<EOF
 #!/bin/bash
 SCRIPT_DIR="\$(cd "\$(dirname "\$0")" && pwd)"
-LOGFILE="\$SCRIPT_DIR${REL_PREFIX}logs/${PLATFORM}_${ROM_NAME}.log"
+LOGFILE="\$SCRIPT_DIR${REL_PREFIX}Logs/${PLATFORM}_${ROM_NAME}.log"
 cd "\$(dirname "\$0")${REL_PREFIX}ROMs/$PLATFORM" || exit
 echo "Starting $ROM_NAME ($PLATFORM) at \$(date)" > "\$LOGFILE"
 echo "Platform: $PLATFORM" >> "\$LOGFILE"

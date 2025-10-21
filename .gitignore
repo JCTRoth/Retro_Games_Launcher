@@ -36,10 +36,13 @@
 /ROMs/
 
 # Log files (generated at runtime)
-/logs/
+/Logs/
 
 # Generated launcher scripts (can be regenerated with create_launchers.sh)
 start_*.sh
+
+# Launcher directory (generated scripts)
+/Launchers/
 
 # Programs directory (contains DOS executables and game files)
 /Programs
