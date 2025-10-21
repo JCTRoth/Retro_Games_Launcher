@@ -161,10 +161,17 @@ for rom_dir in "$ROMS_DIR"/*/; do
 
     # Determine emulator based on platform
     LOG_CMD="2>&1 | tee -a \"\$LOGFILE\""
+    CONFIG_CMD=""
     case "$PLATFORM" in
         "GB")
             EMULATOR_CMD="mgba-qt"
+            CONFIG_CMD="-4 -C ports.qt.scaleMultiplier=4 -C gba.video.shader=/usr/share/mgba/shaders/xbr-lv3.shader"
             EXTENSIONS=("*.gb" "*.gbc")
+            ;;
+        "GBA")
+            EMULATOR_CMD="mgba-qt"
+            CONFIG_CMD="-4 -C ports.qt.scaleMultiplier=4 -C gba.video.shader=/usr/share/mgba/shaders/gba-color.shader"
+            EXTENSIONS=("*.gba")
             ;;
         "PS1")
             EMULATOR_CMD="flatpak run org.duckstation.DuckStation"
@@ -176,7 +183,7 @@ for rom_dir in "$ROMS_DIR"/*/; do
             ;;
         "N64")
             EMULATOR_CMD="mupen64plus"
-            LOG_CMD="2>&1 >> \"\$LOGFILE\""
+            LOG_CMD="2>&1 | tee -a \"\$LOGFILE\""
             EXTENSIONS=("*.n64" "*.z64" "*.v64")
             ;;
         *)
@@ -211,7 +218,7 @@ echo "Platform: $PLATFORM" >> "\$LOGFILE"
 echo "ROM: $ROM" >> "\$LOGFILE"
 echo "Emulator: $EMULATOR_CMD" >> "\$LOGFILE"
 echo "===========================================" >> "\$LOGFILE"
-$EMULATOR_CMD "$ROM" $LOG_CMD
+$EMULATOR_CMD $CONFIG_CMD "$ROM" $LOG_CMD
 echo "===========================================" >> "\$LOGFILE"
 echo "$ROM_NAME ($PLATFORM) session ended at \$(date)" >> "\$LOGFILE"
 EOF

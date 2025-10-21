@@ -39,8 +39,7 @@
 /logs/
 
 # Generated launcher scripts (can be regenerated with create_launchers.sh)
-# Uncomment the line below if you don't want to track generated launchers:
-# start_*.sh
+start_*.sh
 
 # Programs directory (contains DOS executables and game files)
 /Programs

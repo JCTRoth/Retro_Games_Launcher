@@ -7,7 +7,8 @@ If a `dosbox.conf` is present in a program's folder, the launcher will use that 
 ## Features
 
 - **DOS Games**: Automatic launcher generation for DOSBox programs
-- **Console ROMs**: Support for Game Boy, PS1, PSP, and N64 ROMs
+- **Console ROMs**: Support for Game Boy, Game Boy Advance, PS1, PSP, and N64 ROMs with Management UIs
+- **GUI Interfaces**: ROM launchers open emulator management interfaces for settings and controls
 - **Logging**: All sessions are logged with timestamps
 - **Cross-platform**: Works on Linux/macOS (.sh) and Windows (.bat)
 
@@ -36,6 +37,8 @@ If a `dosbox.conf` is present in a program's folder, the launcher will use that 
 
 4. **Run Games**
    - Double-click any `start_*Name*.sh` launcher
+   - **DOS games**: Launch directly in DOSBox
+   - **ROM games**: Open emulator GUI for management and settings
    - Logs are saved in `logs/` folder
 
 ## Folder Structure
@@ -49,6 +52,7 @@ DOS_Launcher/                  # Main Folder
 │   └── Blood/                 # Example DOS game
 ├── ROMs/                      # Console ROM folders
 │   ├── GB/                    # Game Boy ROMs (.gb, .gbc)
+│   ├── GBA/                   # Game Boy Advance ROMs (.gba)
 │   ├── PS1/                   # PlayStation 1 ROMs (.bin, .cue, .iso, .img)
 │   ├── PSP/                   # PSP ROMs (.iso, .cso)
 │   └── N64/                   # Nintendo 64 ROMs (.n64, .z64, .v64)
@@ -60,19 +64,20 @@ DOS_Launcher/                  # Main Folder
 
 ## Supported Platforms
 
-| Platform | Emulator | File Extensions | Installation |
-|----------|----------|-----------------|--------------|
-| DOS | DOSBox | .exe | Auto (Linux) / Manual (Win/Mac) |
-| Game Boy | mGBA | .gb, .gbc | Auto |
-| PS1 | DuckStation | .bin, .cue, .iso, .img | Auto |
-| PSP | PPSSPP | .iso, .cso | Auto |
-| N64 | Mupen64Plus | .n64, .z64, .v64 | Auto |
+| Platform | Emulator | Interface | File Extensions | Installation |
+|----------|----------|-----------|-----------------|--------------|
+| DOS | DOSBox | Direct Launch | .exe | Auto (Linux) / Manual (Win/Mac) |
+| Game Boy | mGBA | GUI Management | .gb, .gbc | Auto |
+| Game Boy Advance | mGBA | GUI Management | .gba | Auto |
+| PS1 | DuckStation | GUI Management | .bin, .cue, .iso, .img | Auto |
+| PSP | PPSSPP | GUI Management | .iso, .cso | Auto |
+| N64 | Mupen64Plus Console | Console Management | .n64, .z64, .v64 | Auto |
 
 ## Installation Script
 
 The `install_emulators.sh` script automatically installs all required emulators on Ubuntu/Debian systems:
 
-- **APT packages**: dosbox, mgba-qt, mupen64plus-qt
+- **APT packages**: dosbox, mgba-qt, mupen64plus, mupen64plus-qt
 - **Flatpak apps**: DuckStation (PS1), PPSSPP (PSP)
 - **Dependencies**: Sets up Flatpak and Flathub repository if needed
 
@@ -115,3 +120,20 @@ Examples:
 ```
 
 When using a custom output directory, launcher scripts will use relative paths to access the Programs/, ROMs/, and logs/ directories from the main project folder.
+
+## Configuration
+
+The launcher system supports custom configurations for optimal gaming experience:
+
+### DOS Games
+- Uses `Configuration/dosbox.conf` for DOSBox settings
+- Optimized for retro gaming with proper scaling and sound
+
+### Game Boy / Game Boy Advance
+- **4x scaling** for crisp, modern visuals
+- **Modern shaders**: xBR upscaling for GB, GBA color correction for GBA
+- Automatic aspect ratio locking
+- Optimized window sizes (GB: 768x512, GBA: 720x480)
+
+### Other Platforms
+- DuckStation, PPSSPP, and Mupen64Plus use their default optimized settings
