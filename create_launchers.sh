@@ -174,8 +174,8 @@ for rom_dir in "$ROMS_DIR"/*/; do
             EXTENSIONS=("*.gba")
             ;;
         "PS1")
-            EMULATOR_CMD="flatpak run org.duckstation.DuckStation"
-            EXTENSIONS=("*.bin" "*.cue" "*.iso" "*.img")
+            EMULATOR_CMD="flatpak run --filesystem=\$PROJECT_DIR org.duckstation.DuckStation"
+            EXTENSIONS=("*.cue" "*.bin" "*.iso" "*.img")
             ;;
         "PSP")
             EMULATOR_CMD="flatpak run org.ppsspp.PPSSPP"
@@ -200,6 +200,16 @@ for rom_dir in "$ROMS_DIR"/*/; do
         while IFS= read -r -d '' rom_file; do
             ROM=$(basename "$rom_file")
             ROM_NAME="${ROM%.*}"  # Remove extension
+            
+            # For PS1, skip .bin files if corresponding .cue exists
+            if [[ "$PLATFORM" == "PS1" && "$ROM" == *.bin ]]; then
+                CUE_FILE="${rom_file%.*}.cue"
+                if [ -f "$CUE_FILE" ]; then
+                    echo "  Skipping $ROM (using .cue file instead)"
+                    continue
+                fi
+            fi
+            
             echo "  Processing ROM: $ROM"
 
             # Create launcher for this ROM
@@ -209,17 +219,25 @@ for rom_dir in "$ROMS_DIR"/*/; do
             else
                 REL_PREFIX="/$REL_PATH/"
             fi
+            
+            # Special handling for PS1 to use full path due to Flatpak sandboxing
+            ROM_ARG="\"$ROM\""
+            if [[ "$PLATFORM" == "PS1" ]]; then
+                ROM_ARG="\"\$(pwd)/$ROM\""
+            fi
+            
             cat > "$SCRIPT" <<EOF
 #!/bin/bash
 SCRIPT_DIR="\$(cd "\$(dirname "\$0")" && pwd)"
-LOGFILE="\$SCRIPT_DIR${REL_PREFIX}Logs/${PLATFORM}_${ROM_NAME}.log"
+PROJECT_DIR="\$(dirname "\$SCRIPT_DIR")"
+LOGFILE="\$PROJECT_DIR/Logs/${PLATFORM}_${ROM_NAME}.log"
 cd "\$(dirname "\$0")${REL_PREFIX}ROMs/$PLATFORM" || exit
 echo "Starting $ROM_NAME ($PLATFORM) at \$(date)" > "\$LOGFILE"
 echo "Platform: $PLATFORM" >> "\$LOGFILE"
 echo "ROM: $ROM" >> "\$LOGFILE"
 echo "Emulator: $EMULATOR_CMD" >> "\$LOGFILE"
 echo "===========================================" >> "\$LOGFILE"
-$EMULATOR_CMD $CONFIG_CMD "$ROM" $LOG_CMD
+$EMULATOR_CMD $CONFIG_CMD $ROM_ARG \$LOG_CMD
 echo "===========================================" >> "\$LOGFILE"
 echo "$ROM_NAME ($PLATFORM) session ended at \$(date)" >> "\$LOGFILE"
 EOF
