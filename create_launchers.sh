@@ -137,12 +137,26 @@ for dir in "$PROGRAMS_DIR"/*/; do
 SCRIPT_DIR="\$(cd "\$(dirname "\$0")" && pwd)"
 LOGFILE="\$SCRIPT_DIR${REL_PREFIX}Logs/${PROG}.log"
 cd "\$(dirname "\$0")${REL_PREFIX}Programs/$PROG" || exit
-echo "Starting $PROG at \$(date)" > "\$LOGFILE"
+echo "===========================================" > "\$LOGFILE"
+echo "DOS GAME LAUNCHER LOG" >> "\$LOGFILE"
+echo "===========================================" >> "\$LOGFILE"
+echo "Game: $PROG" >> "\$LOGFILE"
+echo "Started: \$(date '+%Y-%m-%d %H:%M:%S')" >> "\$LOGFILE"
+echo "Working Directory: \$(pwd)" >> "\$LOGFILE"
+echo "Executable: $(basename "$EXE")" >> "\$LOGFILE"
+echo "DOSBox Command: $DOSBOX_CMD" >> "\$LOGFILE"
+echo "Config File: ${REL_PREFIX}Configuration/dosbox.conf" >> "\$LOGFILE"
 echo "Logfile: \$LOGFILE" >> "\$LOGFILE"
+echo "System: \$(uname -s) \$(uname -r)" >> "\$LOGFILE"
 echo "===========================================" >> "\$LOGFILE"
+echo "" >> "\$LOGFILE"
 "$DOSBOX_CMD" "$(basename "$EXE")" -conf "${REL_PREFIX}Configuration/dosbox.conf" -fullscreen -exit 2>&1 | tee -a "\$LOGFILE"
+EXIT_CODE=\${PIPESTATUS[0]}
+echo "" >> "\$LOGFILE"
 echo "===========================================" >> "\$LOGFILE"
-echo "$PROG session ended at \$(date)" >> "\$LOGFILE"
+echo "Ended: \$(date '+%Y-%m-%d %H:%M:%S')" >> "\$LOGFILE"
+echo "Exit Code: \$EXIT_CODE" >> "\$LOGFILE"
+echo "===========================================" >> "\$LOGFILE"
 EOF
     chmod +x "$SCRIPT"
     echo "  Created launcher: $SCRIPT"
@@ -160,7 +174,6 @@ for rom_dir in "$ROMS_DIR"/*/; do
     echo "Processing ROM platform: $PLATFORM"
 
     # Determine emulator based on platform
-    LOG_CMD="2>&1 | tee -a \"\$LOGFILE\""
     CONFIG_CMD=""
     case "$PLATFORM" in
         "GB")
@@ -184,7 +197,6 @@ for rom_dir in "$ROMS_DIR"/*/; do
         "N64")
             EMULATOR_CMD="mupen64plus"
             CONFIG_CMD="--fullscreen --configdir \"\$SCRIPT_DIR${REL_PREFIX}Configuration\""
-            LOG_CMD="2>&1 | tee -a \"\$LOGFILE\""
             EXTENSIONS=("*.n64" "*.z64" "*.v64")
             ;;
         *)
@@ -232,14 +244,28 @@ SCRIPT_DIR="\$(cd "\$(dirname "\$0")" && pwd)"
 PROJECT_DIR="\$(dirname "\$SCRIPT_DIR")"
 LOGFILE="\$PROJECT_DIR/Logs/${PLATFORM}_${ROM_NAME}.log"
 cd "\$(dirname "\$0")${REL_PREFIX}ROMs/$PLATFORM" || exit
-echo "Starting $ROM_NAME ($PLATFORM) at \$(date)" > "\$LOGFILE"
+echo "===========================================" > "\$LOGFILE"
+echo "$PLATFORM EMULATOR LAUNCHER LOG" >> "\$LOGFILE"
+echo "===========================================" >> "\$LOGFILE"
+echo "Game: $ROM_NAME" >> "\$LOGFILE"
 echo "Platform: $PLATFORM" >> "\$LOGFILE"
-echo "ROM: $ROM" >> "\$LOGFILE"
+echo "Started: \$(date '+%Y-%m-%d %H:%M:%S')" >> "\$LOGFILE"
+echo "ROM File: $ROM" >> "\$LOGFILE"
+echo "ROM Path: \$(pwd)/$ROM" >> "\$LOGFILE"
 echo "Emulator: $EMULATOR_CMD" >> "\$LOGFILE"
+echo "Config: $CONFIG_CMD" >> "\$LOGFILE"
+echo "Working Directory: \$(pwd)" >> "\$LOGFILE"
+echo "Logfile: \$LOGFILE" >> "\$LOGFILE"
+echo "System: \$(uname -s) \$(uname -r)" >> "\$LOGFILE"
 echo "===========================================" >> "\$LOGFILE"
-$EMULATOR_CMD $CONFIG_CMD $ROM_ARG \$LOG_CMD
+echo "" >> "\$LOGFILE"
+$EMULATOR_CMD $CONFIG_CMD $ROM_ARG 2>&1 | tee -a "\$LOGFILE"
+EXIT_CODE=\${PIPESTATUS[0]}
+echo "" >> "\$LOGFILE"
 echo "===========================================" >> "\$LOGFILE"
-echo "$ROM_NAME ($PLATFORM) session ended at \$(date)" >> "\$LOGFILE"
+echo "Ended: \$(date '+%Y-%m-%d %H:%M:%S')" >> "\$LOGFILE"
+echo "Exit Code: \$EXIT_CODE" >> "\$LOGFILE"
+echo "===========================================" >> "\$LOGFILE"
 EOF
             chmod +x "$SCRIPT"
             echo "  Created launcher: $SCRIPT"

@@ -32,16 +32,16 @@ install_apt_packages() {
         if ! dpkg -l | grep -q "^ii  $pkg "; then
             TO_INSTALL+=("$pkg")
         else
-            echo "  ✓ $pkg already installed"
+            echo "✓ $pkg already installed"
         fi
     done
 
     if [ ${#TO_INSTALL[@]} -gt 0 ]; then
         echo "  Installing: ${TO_INSTALL[*]}"
         sudo apt install -y "${TO_INSTALL[@]}"
-        echo "  ✓ APT packages installed successfully"
+        echo "✓ APT packages installed successfully"
     else
-        echo "  ✓ All APT packages already installed"
+        echo "✓ All APT packages already installed"
     fi
 }
 
@@ -53,7 +53,7 @@ setup_flatpak() {
         echo "  Installing Flatpak..."
         sudo apt install -y flatpak
     else
-        echo "  ✓ Flatpak already installed"
+        echo "✓ Flatpak already installed"
     fi
 
     # Add Flathub repository if not already added
@@ -61,7 +61,7 @@ setup_flatpak() {
         echo "  Adding Flathub repository..."
         flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
     else
-        echo "  ✓ Flathub repository already added"
+        echo "✓ Flathub repository already added"
     fi
 }
 
@@ -80,9 +80,9 @@ install_flatpak_apps() {
         if ! flatpak list | grep -q "$app_id"; then
             echo "  Installing $app_name..."
             flatpak install -y flathub "$app_id"
-            echo "  ✓ $app_name installed"
+            echo "✓ $app_name installed"
         else
-            echo "  ✓ $app_name already installed"
+            echo "✓ $app_name already installed"
         fi
     done
 }
@@ -102,7 +102,7 @@ apply_flatpak_overrides() {
         if flatpak list | grep -q "$app_id"; then
             echo "  Granting filesystem access to $app_name..."
             sudo flatpak override --filesystem=host "$app_id"
-            echo "  ✓ Filesystem access granted for $app_name"
+            echo "✓ Filesystem access granted for $app_name"
         fi
     done
 }
@@ -122,11 +122,11 @@ setup_duckstation_bios() {
     mkdir -p "$(dirname "$SETTINGS_FILE")"
     
     if [ ! -f "$SETTINGS_FILE" ]; then
-        echo "  Creating default DuckStation configuration..."
+        echo "Creating default DuckStation configuration..."
         create_default_config
-        echo "  ✓ Default configuration created"
+        echo "✓ Default configuration created"
     else
-        echo "  ✓ DuckStation configuration already exists"
+        echo "✓ DuckStation configuration already exists"
     fi
     
     # Always ensure BIOS and ROM Paths are set correctly
@@ -152,16 +152,16 @@ setup_duckstation_bios() {
             return 1
         fi
         
-        echo "  ✓ Valid PS1 BIOS found at $BIOS_FILE"
+        echo "✓ Valid PS1 BIOS found at $BIOS_FILE"
         
         # Clean up any BIOS files in DuckStation's config directory to ensure it uses the project folder
         FLATPAK_BIOS_DIR="$HOME/.var/app/org.duckstation.DuckStation/config/duckstation/bios"
         if [ -d "$FLATPAK_BIOS_DIR" ]; then
             rm -f "$FLATPAK_BIOS_DIR"/*.bin 2>/dev/null || true
-            echo "  ✓ Cleaned up BIOS files from DuckStation config directory"
+            echo "✓ Cleaned up BIOS files from DuckStation config directory"
         fi
         
-        echo "  ✓ DuckStation will use BIOS from project folder: $BIOS_DIR"
+        echo "✓ DuckStation will use BIOS from project folder: $BIOS_DIR"
     fi
 }
 
