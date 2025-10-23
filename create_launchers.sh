@@ -126,7 +126,7 @@ for dir in "$PROGRAMS_DIR"/*/; do
     fi
 
     # Create OS-specific launcher
-    SCRIPT="$OUTPUT_DIR/start_${PROG}.sh"
+    SCRIPT="$OUTPUT_DIR/start_DOS_${PROG}.sh"
     if [ -z "$REL_PATH" ]; then
         REL_PREFIX="/"
     else
@@ -213,13 +213,21 @@ for rom_dir in "$ROMS_DIR"/*/; do
             ROM=$(basename "$rom_file")
             ROM_NAME="${ROM%.*}"  # Remove extension
             
-            # For PS1, skip .bin files if corresponding .cue exists
+            # For PS1, skip .bin files if any .cue exists in the directory
             if [[ "$PLATFORM" == "PS1" && "$ROM" == *.bin ]]; then
-                CUE_FILE="${rom_file%.*}.cue"
-                if [ -f "$CUE_FILE" ]; then
-                    echo "  Skipping $ROM (using .cue file instead)"
-                    continue
-                fi
+                # Check if this .bin file is referenced by any .cue file
+                SKIP_BIN=false
+                for cue_file in "$rom_dir"/*.cue; do
+                    if [ -f "$cue_file" ]; then
+                        # Check if this .bin file is mentioned in any .cue file
+                        if grep -qF "$ROM" "$cue_file" 2>/dev/null; then
+                            echo "  Skipping $ROM (referenced in $(basename "$cue_file"))"
+                            SKIP_BIN=true
+                            break
+                        fi
+                    fi
+                done
+                [ "$SKIP_BIN" = true ] && continue
             fi
             
             echo "  Processing ROM: $ROM"

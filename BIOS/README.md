@@ -8,6 +8,7 @@ Some emulations like PS1 and PS2 require BIOS files from the original device to 
 3. The BIOS file should be exactly 512KB (524,288 bytes)
 
 ### BIOS Filename
+- BIOS FIles for all ROMS [`Download`](https://coolrom.com.au/bios/psx/)
 - NTSC-U: [`scph1001.bin`](https://duckduckgo.com/?q=PS1+BIOS+scph1001.bin+download&t=h_&ia=web)
 - NTSC-J: [`scph1000.bin`](https://duckduckgo.com/?q=PS1+BIOS+scph1000.bin+download&t=h_&ia=web)
 - PAL: [`scph1002.bin`](https://duckduckgo.com/?q=PS1+BIOS+scph1002.bin+download&t=h_&ia=web)
