@@ -1,6 +1,6 @@
 #!/bin/bash
 # Launcher generator for DOSBox programs and console ROMs
-# Supports DOSBox (.sh) and console emulators (GB, PS1, PSP, N64)
+# Supports DOSBox (.sh) and console emulators (GB, GBA, PS1, PS2, PSP, N64)
 # Supports Linux/macOS (.sh) and Windows (.bat)
 
 # Parse command line arguments
@@ -189,6 +189,10 @@ for rom_dir in "$ROMS_DIR"/*/; do
         "PS1")
             EMULATOR_CMD="flatpak run --filesystem=\$PROJECT_DIR org.duckstation.DuckStation"
             EXTENSIONS=("*.cue" "*.bin" "*.iso" "*.img")
+            ;;
+        "PS2")
+            EMULATOR_CMD="flatpak run --filesystem=\$PROJECT_DIR net.pcsx2.PCSX2"
+            EXTENSIONS=("*.iso" "*.bin" "*.cue")
             ;;
         "PSP")
             EMULATOR_CMD="flatpak run org.ppsspp.PPSSPP"

@@ -1,7 +1,7 @@
 #!/bin/bash
 # Ubuntu Emulator Installation Script
 # Installs all required emulators for DOS_Launcher system
-# Supports: DOSBox, Game Boy (mGBA), PS1 (DuckStation), PSP (PPSSPP), N64 (Mupen64Plus)
+# Supports: DOSBox, Game Boy (mGBA), PS1 (DuckStation), PS2 (PCSX2), PSP (PPSSPP), N64 (Mupen64Plus)
 
 set -e  # Exit on any error
 
@@ -71,6 +71,7 @@ install_flatpak_apps() {
 
     FLATPAK_APPS=(
         "org.duckstation.DuckStation:DuckStation (PS1 emulator)"
+        "net.pcsx2.PCSX2:PCSX2 (PS2 emulator)"
         "org.ppsspp.PPSSPP:PPSSPP (PSP emulator)"
     )
 
@@ -93,6 +94,7 @@ apply_flatpak_overrides() {
     
     FLATPAK_APPS=(
         "org.duckstation.DuckStation:DuckStation (PS1 emulator)"
+        "net.pcsx2.PCSX2:PCSX2 (PS2 emulator)"
         "org.ppsspp.PPSSPP:PPSSPP (PSP emulator)"
     )
     

@@ -7,7 +7,7 @@ If a `dosbox.conf` is present in a program's folder, the launcher will use that 
 ## Features
 
 - **DOS Games**: Automatic launcher generation for DOSBox programs
-- **Console ROMs**: Support for Game Boy, Game Boy Advance, PS1, PSP, and N64 ROMs with Management UIs
+- **Console ROMs**: Support for Game Boy, Game Boy Advance, PS1, PS2, PSP, and N64 ROMs with Management UIs
 - **GUI Interfaces**: ROM launchers open emulator management interfaces for settings and controls
 - **Logging**: All sessions are logged with timestamps
 - **Cross-platform**: Works on Linux/macOS (.sh) and Windows (.bat)
@@ -22,12 +22,13 @@ If a `dosbox.conf` is present in a program's folder, the launcher will use that 
    - DOSBox (DOS games)
    - mGBA (Game Boy)
    - DuckStation (PS1)
+   - PCSX2 (PS2)
    - PPSSPP (PSP)
    - Mupen64Plus (N64)
 
 2. **Add Games/ROMs**
    - DOS games go in `Programs/` folder
-   - ROMs go in `ROMs/{GB,PS1,PSP,N64}/` folders
+   - ROMs go in `ROMs/{GB,GBA,PS1,PS2,PSP,N64}/` folders
 
 3. **Generate Launchers**
    - **Linux/macOS:** Run `./create_launchers.sh`
@@ -58,6 +59,7 @@ DOS_Launcher/                  # Main Folder
 │   ├── GB/                    # Game Boy ROMs (.gb, .gbc)
 │   ├── GBA/                   # Game Boy Advance ROMs (.gba)
 │   ├── PS1/                   # PlayStation 1 ROMs (.bin, .cue, .iso, .img)
+│   ├── PS2/                   # PlayStation 2 ROMs (.iso, .bin, .cue)
 │   ├── PSP/                   # PSP ROMs (.iso, .cso)
 │   └── N64/                   # Nintendo 64 ROMs (.n64, .z64, .v64)
 ├── Logs/                      # Session logs
@@ -75,6 +77,7 @@ DOS_Launcher/                  # Main Folder
 | Game Boy | mGBA | GUI Management | .gb, .gbc | Auto |
 | Game Boy Advance | mGBA | GUI Management | .gba | Auto |
 | PS1 | DuckStation | GUI Management | .bin, .cue, .iso, .img | Auto |
+| PS2 | PCSX2 | GUI Management | .iso, .bin, .cue | Auto |
 | PSP | PPSSPP | GUI Management | .iso, .cso | Auto |
 | N64 | Mupen64Plus Console | Console Management | .n64, .z64, .v64 | Auto |
 
