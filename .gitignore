@@ -125,4 +125,5 @@ build-dir/
 memcards/
 screenshots/
 savegames/
-
+# Bios Files
+*.bin
