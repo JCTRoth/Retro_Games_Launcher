@@ -1,6 +1,9 @@
 # DOSBox & ROM Launcher
 
 This program creates launcher scripts that allow you to run DOS games and console ROMs with a single double-click.
+The launcher provides a set of optimized configurations for DOS and ROM emulators.
+
+DOS:
 It uses a default `dosbox.conf` located in the `/Configuration` folder for DOS games.
 If a `dosbox.conf` is present in a program's folder, the launcher will use that configuration instead of the global one.
 
