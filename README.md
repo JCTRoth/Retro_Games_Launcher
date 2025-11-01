@@ -7,6 +7,9 @@ DOS:
 It uses a default `dosbox.conf` located in the `/Configuration` folder for DOS games.
 If a `dosbox.conf` is present in a program's folder, the launcher will use that configuration instead of the global one.
 
+![](.doc/2025-11-01_19-59.png)
+![](.doc/2025-11-01_20-00.png)
+
 ## Features
 
 - **DOS Games**: Automatic launcher generation for DOSBox programs
