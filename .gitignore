@@ -38,7 +38,7 @@
 # Log files (generated at runtime)
 /Logs/
 
-# Generated launcher scripts (can be regenerated with create_launchers.sh)
+# Generated launcher scripts (can be regenerated with create_launchers.sh or create_launchers.bat)
 start_*.sh
 
 # Launcher directory (generated scripts)

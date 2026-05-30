@@ -1,162 +1,150 @@
-# DOSBox & ROM Launcher
+# DOS_Launcher
 
-This program creates launcher scripts that allow you to run DOS games and console ROMs with a single double-click.
-The launcher provides a set of optimized configurations for DOS and ROM emulators.
-
-DOS:
-It uses a default `dosbox.conf` located in the `/Configuration` folder for DOS games.
-If a `dosbox.conf` is present in a program's folder, the launcher will use that configuration instead of the global one.
+DOS_Launcher generates launchers for DOS games and console ROMs so they can be started from a single `.sh` or `.bat` file. The project now supports Linux, macOS, and Windows with platform-specific emulator discovery and installers.
 
 ![](.doc/2025-11-01_19-59.png)
 ![](.doc/2025-11-01_20-00.png)
 
 ## Features
 
-- **DOS Games**: Automatic launcher generation for DOSBox programs
-- **Console ROMs**: Support for Game Boy, Game Boy Advance, PS1, PS2, PSP, and N64 ROMs with Management UIs
-- **GUI Interfaces**: ROM launchers open emulator management interfaces for settings and controls
-- **Logging**: All sessions are logged with timestamps
-- **Cross-platform**: Works on Linux/macOS (.sh) and Windows (.bat)
+- DOS launcher generation with per-game `dosbox.conf` overrides
+- ROM launcher generation for GB, GBA, PS1, PS2, PSP, and N64
+- Linux/macOS shell launchers that detect native binaries, macOS app bundles, and Linux Flatpaks when needed
+- Windows batch launchers backed by PowerShell and the `Configuration/Emulators` folder layout
+- Session logging for every generated launcher in `Logs/`
 
-## Usage
+## Platform Setup
 
-1. **Install Emulators** (Linux only)
-   ```bash
-   ./install_emulators.sh
-   ```
-   This script installs all required emulators:
-   - DOSBox (DOS games)
-   - mGBA (Game Boy)
-   - DuckStation (PS1)
-   - PCSX2 (PS2)
-   - PPSSPP (PSP)
-   - Mupen64Plus (N64)
+### Debian/Ubuntu
 
-2. **Add Games/ROMs**
-   - DOS games go in `Programs/` folder
-   - ROMs go in `ROMs/{GB,GBA,PS1,PS2,PSP,N64}/` folders
-
-3. **Generate Launchers**
-   - **Linux/macOS:** Run `./create_launchers.sh`
-   - **Windows:** Run the corresponding `.bat` file
-   - **Custom output directory:** Use `./create_launchers.sh -o /path/to/output`
-   - Launchers are created in `Launchers/` folder by default
-   - Launchers appear as `start_*Name*.sh` files
-
-4. **Run Games**
-   - Double-click any `start_*Name*.sh` launcher from `Launchers/` folder
-   - **DOS games**: Launch directly in DOSBox
-   - **ROM games**: Open emulator GUI for management and settings
-   - Logs are saved in `Logs/` folder
-
-## Folder Structure
-
-```
-DOS_Launcher/                  # Main Folder
-├── Configuration/             # DOSBox configuration
-│   ├── DosBox/                # Optional: Local DOSBox installation
-│   ├── dosbox.conf            # Global DOSBox configuration
-│   ├── mgba-gb.ini            # Game Boy config (4x scale, xBR shader)
-│   ├── mgba-gba.ini           # Game Boy Advance config (4x scale, GBA color)
-│   └── mupen64plus.cfg        # N64 config (fullscreen, 1080p, Glide64mk2)
-├── Programs/                  # DOS program folders
-│   └── Blood/                 # Example DOS game
-├── ROMs/                      # Console ROM folders
-│   ├── GB/                    # Game Boy ROMs (.gb, .gbc)
-│   ├── GBA/                   # Game Boy Advance ROMs (.gba)
-│   ├── PS1/                   # PlayStation 1 ROMs (.bin, .cue, .iso, .img)
-│   ├── PS2/                   # PlayStation 2 ROMs (.iso, .bin, .cue)
-│   ├── PSP/                   # PSP ROMs (.iso, .cso)
-│   └── N64/                   # Nintendo 64 ROMs (.n64, .z64, .v64)
-├── Logs/                      # Session logs
-├── Launchers/                 # Generated launcher scripts
-│   ├── start_Blood.sh         # Example DOS launcher
-│   └── start_GB_SuperMario.sh # Example ROM launcher
-└── create_launchers.sh        # Script to generate launchers
-```
-
-## Supported Platforms
-
-| Platform | Emulator | Interface | File Extensions | Installation |
-|----------|----------|-----------|-----------------|--------------|
-| DOS | DOSBox | Direct Launch | .exe | Auto (Linux) / Manual (Win/Mac) |
-| Game Boy | mGBA | GUI Management | .gb, .gbc | Auto |
-| Game Boy Advance | mGBA | GUI Management | .gba | Auto |
-| PS1 | DuckStation | GUI Management | .bin, .cue, .iso, .img | Auto |
-| PS2 | PCSX2 | GUI Management | .iso, .bin, .cue | Auto |
-| PSP | PPSSPP | GUI Management | .iso, .cso | Auto |
-| N64 | Mupen64Plus Console | Console Management | .n64, .z64, .v64 | Auto |
-
-## Installation Script
-
-The `install_emulators.sh` script automatically installs all required emulators on Ubuntu/Debian systems:
-
-- **APT packages**: dosbox, mgba-qt, mupen64plus, mupen64plus-qt
-- **Flatpak apps**: DuckStation (PS1), PPSSPP (PSP)
-- **Dependencies**: Sets up Flatpak and Flathub repository if needed
-
-Run it once after cloning the repository:
 ```bash
 ./install_emulators.sh
 ```
 
-The script checks what's already installed and only installs missing components.
+This installer configures:
 
-## Controls
+- `dosbox`
+- `mgba-qt`
+- `mupen64plus` runtime packages and plugins
+- Flatpak + Flathub
+- DuckStation, PCSX2, and PPSSPP via Flatpak
 
-- **DOSBox**: ALT-ENTER (fullscreen), CTRL-F9 (quit), CTRL-F10 (release mouse)
-- **Emulators**: Use emulator-specific controls (usually shown in menus)
+### Fedora
 
-## Notes/Tips
+```bash
+./install_emulators_fedora.sh
+```
 
-- Each DOS program folder can include its own `dosbox.conf` to override the global configuration
-- ROM launchers automatically detect and use the correct emulator
-- All gaming sessions are logged with timestamps in the `logs/` folder
-- For more DOSBox key combinations, see: https://www.dosbox.com/wiki/Special_Keys
-- TODO: Test on Windows
+This installs the Fedora package equivalents plus the same Flatpak applications used on Debian/Ubuntu.
 
-## Command Line Options
+### macOS
 
-The `create_launchers.sh` script supports the following options:
+```bash
+./install_emulators_macos.sh
+```
+
+This installer uses Homebrew to install DOSBox, mGBA, Mupen64Plus, and the DuckStation, PCSX2, and PPSSPP casks when available.
+
+Full guide: [MACOS_SETUP.md](MACOS_SETUP.md)
+
+### Windows
+
+Windows uses manually installed emulator folders under `Configuration/Emulators`.
+
+Full guide: [WINDOWS_SETUP.md](WINDOWS_SETUP.md)
+
+The expected layout is documented in [Configuration/Emulators/README.md](Configuration/Emulators/README.md).
+
+## Quick Start
+
+1. Install emulators for your platform.
+2. Put DOS games in `Programs/<GameName>/`.
+3. Put ROMs in `ROMs/GB`, `ROMs/GBA`, `ROMs/PS1`, `ROMs/PS2`, `ROMs/PSP`, and `ROMs/N64`.
+4. Add BIOS files to `BIOS/` when required. See [BIOS/README.md](BIOS/README.md).
+5. Generate launchers:
+
+```bash
+./create_launchers.sh
+```
+
+On Windows:
+
+```bat
+create_launchers.bat
+```
+
+Generated launchers go to `Launchers/` by default.
+
+## Launcher Generation
+
+### Linux and macOS
 
 ```bash
 ./create_launchers.sh [OPTIONS]
 
 Options:
-  -o, --output DIR    Specify output directory for launcher scripts
-                      (default: current directory)
-  -h, --help          Show help message and usage examples
-
-Examples:
-  ./create_launchers.sh                          # Default: launchers in current dir
-  ./create_launchers.sh -o ~/Desktop/Games       # Launchers on Desktop
-  ./create_launchers.sh --output ./launchers     # Launchers in subdirectory
+  -o, --output DIR    Output directory for launcher scripts
+  -h, --help          Show help
 ```
 
-When using a custom output directory, launcher scripts will use relative paths to access the Programs/, ROMs/, and logs/ directories from the main project folder.
+Example:
 
-## Configuration
+```bash
+./create_launchers.sh -o ~/Desktop/Launchers
+```
 
-The launcher system supports custom configurations for optimal gaming experience:
+### Windows
 
-### DOS Games
-- Uses `Configuration/dosbox.conf` for DOSBox settings
-- Optimized for retro gaming with proper scaling and sound
+```bat
+create_launchers.bat
+create_launchers.bat -OutputDir C:\Games\Launchers
+```
 
-### Game Boy / Game Boy Advance
-- **4x scaling** for crisp, modern visuals
-- **Modern shaders**: xBR upscaling for GB, GBA color correction for GBA
-- Automatic aspect ratio locking
-- Optimized window sizes (GB: 768x512, GBA: 720x480)
+The Windows generator emits `.bat` wrappers that call the shared PowerShell runtime in `Configuration/launch_windows.ps1`.
 
-### N64 (Mupen64Plus)
-- **Fullscreen mode** for immersive gaming
-- **1920x1080 resolution** for modern displays
-- **Glide64mk2 video plugin** for best performance and compatibility
-- **Multithreaded rendering** enabled for smoother gameplay
-- **Fast texture loading** enabled for better performance
-- **Dynamic recompiler** for optimal CPU emulation
-- Uses `Configuration/mupen64plus.cfg` for all settings
+## Folder Layout
 
-### Other Platforms
-- DuckStation, PPSSPP, and Mupen64Plus use their default optimized settings
+```text
+DOS_Launcher/
+├── BIOS/                         # BIOS files such as scph1001.bin
+├── Configuration/
+│   ├── Emulators/               # Windows emulator folders
+│   │   ├── DOSBox/
+│   │   ├── DuckStation/
+│   │   ├── mGBA/
+│   │   ├── Mupen64Plus/
+│   │   ├── PCSX2/
+│   │   └── PPSSPP/
+│   ├── dosbox.conf              # Shared DOSBox config
+│   ├── launch_unix.sh           # Shared Linux/macOS launcher runtime
+│   ├── launch_windows.ps1       # Shared Windows launcher runtime
+│   └── mupen64plus.cfg          # Shared N64 config
+├── Launchers/                   # Generated launchers
+├── Logs/                        # Runtime logs
+├── Programs/                    # DOS program folders
+└── ROMs/                        # Console ROM folders
+```
+
+## Supported Platforms
+
+| Platform | Default launcher type | Emulator resolution |
+|----------|------------------------|---------------------|
+| Debian/Ubuntu | `.sh` | Native packages, Flatpak for PS1/PS2/PSP |
+| Fedora | `.sh` | Native packages, Flatpak for PS1/PS2/PSP |
+| macOS | `.sh` | Homebrew binaries and app bundles |
+| Windows | `.bat` | `Configuration/Emulators/*` first, then `PATH` |
+
+## BIOS Notes
+
+- PS1 requires a valid dumped BIOS file such as `scph1001.bin`
+- PCSX2 may also require BIOS setup on first launch depending on your build
+- Linux installers configure DuckStation to use the project `BIOS/` directory
+- Windows and macOS guides explain the first-run BIOS flow for their platforms
+
+## Notes
+
+- Each DOS game folder can include its own `dosbox.conf`
+- ROM launchers use full paths so spaces in file names are supported
+- PS1 `.bin` files referenced by a `.cue` are skipped during launcher generation to avoid duplicate launchers
+- All launchers write logs to `Logs/`
+- For DOSBox shortcuts, see https://www.dosbox.com/wiki/Special_Keys

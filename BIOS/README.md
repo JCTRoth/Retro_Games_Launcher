@@ -1,19 +1,30 @@
 # BIOS Files
 
-Some emulations like PS1 and PS2 require BIOS files from the original device to function properly. PS3 uses firmware files instead of traditional BIOS.
+Some emulators need BIOS files from the original hardware to boot games correctly.
 
-### How to Dump a PS1 BIOS
-1. You need a PS1 console and a way to dump the BIOS
-2. Use tools like a modchip or special software to extract the BIOS
-3. The BIOS file should be exactly 512KB (524,288 bytes)
+## PS1 BIOS
 
-### BIOS Filename
-- BIOS FIles for all ROMS [`Download`](https://coolrom.com.au/bios/psx/)
-- NTSC-U: [`scph1001.bin`](https://duckduckgo.com/?q=PS1+BIOS+scph1001.bin+download&t=h_&ia=web)
-- NTSC-J: [`scph1000.bin`](https://duckduckgo.com/?q=PS1+BIOS+scph1000.bin+download&t=h_&ia=web)
-- PAL: [`scph1002.bin`](https://duckduckgo.com/?q=PS1+BIOS+scph1002.bin+download&t=h_&ia=web)
+The recommended PS1 BIOS file names are:
 
-## Installation
-1. Place your dumped BIOS file in this `BIOS/` folder
-2. Rename it to `scph1001.bin` (or appropriate region filename)
-3. Run `./install_emulators.sh` to configure DuckStation
+- `scph1001.bin` for NTSC-U
+- `scph1000.bin` for NTSC-J
+- `scph1002.bin` for PAL
+
+The file should be exactly `524288` bytes (`512 KB`).
+
+## How to Prepare It
+
+1. Dump the BIOS from hardware you own.
+2. Copy the BIOS file into this `BIOS/` directory.
+3. Rename it to the expected region filename if needed.
+4. Run the installer for your platform or follow the platform setup guide:
+	- Debian/Ubuntu: `./install_emulators.sh`
+	- Fedora: `./install_emulators_fedora.sh`
+	- macOS: `./install_emulators_macos.sh`
+	- Windows: see `WINDOWS_SETUP.md`
+
+## Notes
+
+- Linux installers configure DuckStation to scan this project `BIOS/` folder automatically.
+- On macOS and Windows, DuckStation or PCSX2 may ask you to confirm the BIOS location on first launch.
+- If PS1 games fail to boot, verify the filename and size before changing launcher settings.
